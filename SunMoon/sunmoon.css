@@ -1,0 +1,15 @@
+.sun-moon-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+.sm-card {
+  background: var(--glass-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+.sm-card h3 {
+  margin-top: 0.5rem;
+}

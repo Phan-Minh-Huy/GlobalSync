@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlobalSync | Advanced Weather & Time</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="WeatherForecast/weather.css" />
+    <link rel="stylesheet" href="Timezone/timezone.css" />
+    <link rel="stylesheet" href="InteractiveMap/map.css" />
+    <link rel="stylesheet" href="AirQuality/air.css" />
+    <link rel="stylesheet" href="Alerts/alerts.css" />
+    <link rel="stylesheet" href="SunMoon/sunmoon.css" />
+    <link rel="stylesheet" href="OutdoorInfo/outdoor.css" />
+    <link rel="stylesheet" href="TemperatureGraph/graph.css" />
+    <link rel="stylesheet" href="PrecipitationGraph/rainGraph.css" />
+    <link rel="stylesheet" href="WeeklyForecast/weekly.css" />
+    <link rel="stylesheet" href="History/history.css" />
+  </head>
+  <body>
+    <div class="background-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+      <header class="glass-panel header">
+        <h1>Global<span>Sync</span></h1>
+        <div class="header-actions">
+          <button id="theme-toggle" class="btn">🌓 Theme</button>
+          <button id="history-btn" class="btn" title="Search History">
+            🕒 History
+          </button>
+        </div>
+      </header>
+
+      <section class="glass-panel search-section">
+        <div class="search-box">
+          <button id="locate-btn" class="btn" title="Use my location">
+            📍
+          </button>
+          <div class="autocomplete-wrapper">
+            <input
+              type="text"
+              id="city-input"
+              placeholder="Enter city name (e.g., Tokyo)..."
+              autocomplete="off"
+            />
+            <ul id="suggestions-list" class="hidden"></ul>
+          </div>
+          <button id="search-btn" class="btn">Search</button>
+        </div>
+        <div id="error-msg" class="hidden error">
+          City not found. Please try again.
+        </div>
+      </section>
+
+      <main class="dashboard-grid hidden" id="main-dashboard">
+        <section class="glass-panel">
+          <h2>Current Weather</h2>
+          <div class="weather-info">
+            <h3 id="display-city"></h3>
+            <h1 id="temperature"></h1>
+            <p id="weather-desc"></p>
+          </div>
+        </section>
+
+        <section class="glass-panel">
+          <h2>Air Quality</h2>
+          <div class="aqi-card">
+            <h1 id="aqi-value">--</h1>
+            <p id="aqi-level" class="badge">Waiting for data</p>
+            <div class="aqi-details">
+              <span>PM2.5: <strong id="pm25-value">--</strong> µg/m³</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="glass-panel">
+          <h2>Severe Weather Alerts</h2>
+          <div id="alerts-container" class="alerts-list">
+            <p class="safe-text">No active alerts.</p>
+          </div>
+        </section>
+
+        <section class="glass-panel span-full">
+          <h2>7-Day Forecast</h2>
+          <div id="weekly-grid" class="weekly-grid"></div>
+        </section>
+
+        <section class="glass-panel map-panel">
+          <h2>Interactive Map</h2>
+          <div id="weather-map" class="map-container"></div>
+        </section>
+
+        <section class="glass-panel">
+          <h2>Sunrise/Sunset</h2>
+          <div class="sun-moon-grid">
+            <div class="sm-card">
+              <span>🌅 Sunrise</span>
+              <h3 id="sunrise-time">--:--</h3>
+            </div>
+            <div class="sm-card">
+              <span>🌇 Sunset</span>
+              <h3 id="sunset-time">--:--</h3>
+            </div>
+          </div>
+        </section>
+
+        <section class="glass-panel">
+          <h2>Travel & Outdoor</h2>
+          <div class="outdoor-grid">
+            <div class="out-card">
+              <span>UV Index</span><strong id="uv-index">--</strong>
+            </div>
+            <div class="out-card">
+              <span>Visibility</span><strong id="visibility">--</strong>
+            </div>
+            <div class="out-card">
+              <span>Humidity</span><strong id="humidity">--</strong>
+            </div>
+            <div class="out-card">
+              <span>Pollen</span><strong id="pollen">--</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="glass-panel span-full">
+          <h2>24-Hour Temperature Graph</h2>
+          <div class="chart-container">
+            <canvas id="temp-chart"></canvas>
+          </div>
+        </section>
+
+        <section class="glass-panel span-full">
+          <h2>24-Hour Precipitation Graph</h2>
+          <div class="chart-container">
+            <canvas id="rain-chart"></canvas>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="history-sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h3>Recent Searches</h3>
+        <button id="close-history-btn" class="btn btn-circle">✖</button>
+      </div>
+      <ul id="history-list"></ul>
+      <button id="clear-history-btn" class="btn-small">Clear History</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="theme.js"></script>
+    <script src="WeatherForecast/weather.js"></script>
+    <script src="Timezone/timezone.js"></script>
+    <script src="InteractiveMap/map.js"></script>
+    <script src="AirQuality/air.js"></script>
+    <script src="Alerts/alerts.js"></script>
+    <script src="SunMoon/sunmoon.js"></script>
+    <script src="OutdoorInfo/outdoor.js"></script>
+    <script src="TemperatureGraph/graph.js"></script>
+    <script src="WeeklyForecast/weekly.js"></script>
+    <script src="PrecipitationGraph/rainGraph.js"></script>
+    <script src="History/history.js"></script>
+  </body>
+</html>

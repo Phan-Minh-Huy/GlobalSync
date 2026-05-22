@@ -1,0 +1,13 @@
+.outdoor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.out-card {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background: var(--glass-bg);
+  border-radius: 8px;
+}

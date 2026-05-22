@@ -1,0 +1,21 @@
+.aqi-card {
+  text-align: center;
+}
+.aqi-card h1 {
+  font-size: 3rem;
+  margin: 1rem 0;
+}
+.aqi-details {
+  margin-top: 1rem;
+  opacity: 0.8;
+}
+.aqi-good {
+  background-color: #28a745;
+}
+.aqi-moderate {
+  background-color: #ffc107;
+  color: #000;
+}
+.aqi-poor {
+  background-color: #dc3545;
+}
